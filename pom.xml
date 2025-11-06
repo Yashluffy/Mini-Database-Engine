@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.cojen</groupId>
+  <artifactId>tupl</artifactId>
+  <packaging>jar</packaging>
+  <name>TuplDB</name>
+  <version>1.9.1</version>
+  <description>
+    TuplDB is a high-performance, concurrent, transactional, scalable, low-level embedded database.
+  </description>
+
+  <url>https://github.com/cojen/TuplDB</url>
+
+  <inceptionYear>2011</inceptionYear>
+
+  <organization>
+    <name>Cojen</name>
+    <url>https://github.com/cojen</url>
+  </organization>
+
+  <licenses>
+    <license>
+      <name>AGPL-3.0</name>
+      <url>https://www.gnu.org/licenses/agpl-3.0.en.html</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Brian O'Neill</name>
+      <email>bronee@gmail.com</email>
+      <organization>Cojen</organization>
+      <organizationUrl>https://cojen.org</organizationUrl>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:https://github.com/cojen/TuplDB.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com:cojen/TuplDB.git</developerConnection>
+    <url>https://github.com/cojen/TuplDB</url>
+  </scm>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
+
+  <issueManagement>
+    <url>https://github.com/cojen/TuplDB/issues</url>
+    <system>GitHub Issues</system>
+  </issueManagement>
+
+  <properties>
+    <!-- encoding -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.cojen</groupId>
+      <artifactId>cojen-maker</artifactId>
+      <version>[2.7,)</version>
+    </dependency>
+    <dependency>
+      <groupId>org.cojen</groupId>
+      <artifactId>cojen-dirmi</artifactId>
+      <version>[2.4,)</version>
+    </dependency>
+    <dependency>
+      <groupId>org.lz4</groupId>
+      <artifactId>lz4-java</artifactId>
+      <version>[1.8,)</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>[1.7,2.0.17]</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>[4.13,)</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.github.stephenc.jcip</groupId>
+      <artifactId>jcip-annotations</artifactId>
+      <version>1.0-1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>2.7.2</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+
+  <build>
+    <plugins>
+
+      <!--
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.12</version>
+        <executions>
+          <execution>
+            <id>default-prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>default-report</id>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>default-check</id>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <rule>
+                  <element>BUNDLE</element>
+                  <limits>
+                    <limit>
+                      <counter>COMPLEXITY</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.60</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <excludes>
+            <exclude>**/RedoEventPrinter.class</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+      -->
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.14.0</version>
+          <configuration>
+            <release>22</release>
+          </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.4.2</version>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <Automatic-Module-Name>org.cojen.tupl</Automatic-Module-Name>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.5.0</version>
+        <configuration>
+          <detectJavaApiLink>true</detectJavaApiLink>
+          <links>
+            <link>https://docs.oracle.com/en/java/javase/24/docs/api</link>
+          </links>
+          <author>false</author>
+          <nodeprecatedlist>true</nodeprecatedlist>
+          <notimestamp>true</notimestamp>
+          <splitindex>true</splitindex>
+          <reportOutputDirectory>${basedir}/docs</reportOutputDirectory>
+          <destDir>javadoc</destDir>
+          <excludePackageNames>org.cojen.tupl.core:org.cojen.tupl.ev:org.cojen.tupl.jmx:org.cojen.tupl.views:org.cojen.tupl.table:org.cojen.tupl.table.codec:org.cojen.tupl.table.filter:org.cojen.tupl.table.join:org.cojen.tupl.remote</excludePackageNames>
+          <quiet>true</quiet>
+          <additionalOptions>-Xdoclint:accessibility</additionalOptions>
+          <additionalOptions>-Xdoclint:html</additionalOptions>
+          <additionalOptions>-Xdoclint:reference</additionalOptions>
+          <additionalOptions>-Xdoclint:syntax</additionalOptions>
+        </configuration>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.5.2</version>
+        <configuration>
+          <trimStackTrace>false</trimStackTrace>
+          <useFile>false</useFile>
+          <runOrder>random</runOrder>
+          <parallel>classes</parallel>
+          <perCoreThreadCount>false</perCoreThreadCount>
+          <threadCount>6</threadCount>
+          <argLine>--enable-native-access=org.cojen.tupl,org.lz4.java -Xmx5g</argLine>
+          <!--argLine>${argLine} - -enable-native-access=org.cojen.tupl,org.lz4.java -Xmx5g</argLine>-->
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.0.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.6</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.13</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>false</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
+
+    </plugins>
+  </build>
+</project>
